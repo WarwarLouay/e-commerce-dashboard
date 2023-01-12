@@ -1,0 +1,12 @@
+.link a {
+    color: black;
+    text-decoration: none;
+}
+
+.link {
+    align-items: center;
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -25%);
+}
