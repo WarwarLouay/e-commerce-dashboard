@@ -103,7 +103,7 @@ const Customers = () => {
                 <Table.Cell>{user.fullName}</Table.Cell>
                 <Table.Cell>{user.email}</Table.Cell>
                 <Table.Cell>{user.country}</Table.Cell>
-                <Table.Cell>{user.countryCode} {user.phone}</Table.Cell>
+                <Table.Cell>{user.countryCode}{user.phone}</Table.Cell>
                 <Table.Cell>
                   <Row justify="center" align="center">
                     <Col css={{ d: "flex" }}>

@@ -48,6 +48,11 @@ class Request {
         const link = "/api/user/delete";
         return await this.api.post(link, data);
     }
+
+    async deleteOrder(data) {
+        const link = "/api/order/delete";
+        return await this.api.post(link, data);
+    }
 }
 
 export default Request;

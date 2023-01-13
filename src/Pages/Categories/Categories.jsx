@@ -156,7 +156,7 @@ const Categories = () => {
                                     <Row justify="center" align="center">
                                         <Col css={{ d: "flex" }}>
                                             <Tooltip
-                                                content="Delete user"
+                                                content="Delete category"
                                                 color="error"
                                             >
                                                 <IconButton onClick={() => deletetHandler(category)}>

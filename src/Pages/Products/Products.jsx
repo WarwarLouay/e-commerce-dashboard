@@ -256,7 +256,7 @@ const Products = () => {
                                             </Tooltip>
                                         </Col>
                                         <Col css={{ d: "flex" }}>
-                                            <Tooltip content="Edit user">
+                                            <Tooltip content="Edit product">
                                                 <IconButton onClick={() => edittHandler(product)}>
                                                     <EditIcon size={20} fill="#979797" />
                                                 </IconButton>
@@ -264,7 +264,7 @@ const Products = () => {
                                         </Col>
                                         <Col css={{ d: "flex" }}>
                                             <Tooltip
-                                                content="Delete user"
+                                                content="Delete product"
                                                 color="error"
                                                 onClick={() => deletetHandler(product)}
                                             >
