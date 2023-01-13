@@ -167,18 +167,18 @@ const Products = () => {
         formData.append('productDescription', productDescription);
         formData.append('category', category);
 
-        if(!productName || !productDescription || !productPrice || !productImage || !selected) {
+        if (!productName || !productDescription || !productPrice || !productImage || !selected) {
             setMessage('Please fill all information');
             setSeverity('error');
             setOpenAlert(true);
             setVisibleAdd(false);
-        } else if(!Number(productPrice)) {
+        } else if (!Number(productPrice)) {
             setMessage('Please enter a valid price');
             setSeverity('error');
             setOpenAlert(true);
             setVisibleAdd(false);
         } else {
-        axios.post(`http://localhost:4000/api/product`, formData).then(response => {
+            axios.post(`http://localhost:4000/api/product`, formData).then(response => {
                 if (response.data.message === 'added') {
                     setMessage(`${productName} added`);
                     setSeverity('success');
@@ -220,7 +220,7 @@ const Products = () => {
             </Button>
             <br />
             <Table
-                style={{zIndex: '0'}}
+                style={{ zIndex: '0' }}
                 bordered
                 shadow={false}
                 color="primary"
@@ -310,10 +310,10 @@ const Products = () => {
                             <h5 style={{ position: 'relative', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}>Upload Image</h5>
                         </div>
                     }
-                    <label htmlFor='file' style={{border: '2px solid grey', padding: '0.5rem 0', textAlign: 'center', borderRadius: '0.7rem', cursor: 'pointer'}}>
-                       {productImageSrc ? 'Change' : 'Upload'}
+                    <label htmlFor='file' style={{ border: '2px solid grey', padding: '0.5rem 0', textAlign: 'center', borderRadius: '0.7rem', cursor: 'pointer' }}>
+                        {productImageSrc ? 'Change' : 'Upload'}
                     </label>
-                    <input style={{display: 'none'}} type='file' id='file'
+                    <input style={{ display: 'none' }} type='file' id='file'
                         accept='.png, .jpg .jpeg'
                         onChange={(e) => {
                             setProductImage(e.target.files); const file = e.target.files[0];

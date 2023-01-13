@@ -38,6 +38,16 @@ class Request {
         const link = "/api/product/update";
         return await this.api.post(link, data);
     }
+
+    async deleteCategory(data) {
+        const link = "/api/category/delete";
+        return await this.api.post(link, data);
+    }
+
+    async deleteUser(data) {
+        const link = "/api/user/delete";
+        return await this.api.post(link, data);
+    }
 }
 
 export default Request;

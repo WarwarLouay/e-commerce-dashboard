@@ -2,6 +2,7 @@
 import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import NavBar from './Components/NavBar/NavBar';
+import Categories from './Pages/Categories/Categories';
 import Customers from './Pages/Customers/Customers';
 import Login from './Pages/Login/Login';
 import Orders from './Pages/Orders/Orders';
@@ -25,6 +26,7 @@ return (
       <Routes>
         <Route path='/login' element={ <Login /> } />
         <Route exact path='/' element={ <Products /> } />
+        <Route path='/categories' element={ <Categories /> } />
         <Route path='/customers' element={ <Customers /> } />
         <Route path='/orders' element={ <Orders /> } />
       </Routes>
