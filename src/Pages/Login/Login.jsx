@@ -33,7 +33,7 @@ const Login = () => {
             }
             if (!data.message) {
                 sessionStorage.setItem('isLoggedIn', 'isLoggedIn');
-                navigate('/products');
+                navigate('/');
             }
         } catch (err) {
             setMessage('Something Wrong');

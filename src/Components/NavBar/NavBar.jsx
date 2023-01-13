@@ -70,7 +70,7 @@ const NavBar = () => {
                 <Navbar.Link className={classes.link}
                     isActive={active === 'Products'}
                     onClick={() => setIsActive('Products')}>
-                    <Link to='/products'>Products</Link>
+                    <Link to='/'>Products</Link>
                 </Navbar.Link>
 
                 <Navbar.Link className={classes.link}

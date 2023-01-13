@@ -23,8 +23,8 @@ return (
   <BrowserRouter>
   { isIn ? <NavBar /> : <div></div>}
       <Routes>
-        <Route exact path='/login' element={ <Login /> } />
-        <Route path='/products' element={ <Products /> } />
+        <Route path='/login' element={ <Login /> } />
+        <Route exact path='/' element={ <Products /> } />
         <Route path='/customers' element={ <Customers /> } />
         <Route path='/orders' element={ <Orders /> } />
       </Routes>
