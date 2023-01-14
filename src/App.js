@@ -5,6 +5,7 @@ import NavBar from './Components/NavBar/NavBar';
 import Categories from './Pages/Categories/Categories';
 import Customers from './Pages/Customers/Customers';
 import Login from './Pages/Login/Login';
+import OrderDetails from './Pages/OrderDetails/OrderDetails';
 import Orders from './Pages/Orders/Orders';
 import Products from './Pages/Products/Products';
 
@@ -12,7 +13,7 @@ const App = () => {
 
   let isIn;
   const callPage = () => {
-    isIn = sessionStorage.getItem('isLoggedIn');
+    isIn = localStorage.getItem('isLoggedIn');
     return isIn;
   }
   
@@ -29,6 +30,7 @@ return (
         <Route path='/categories' element={ <Categories /> } />
         <Route path='/customers' element={ <Customers /> } />
         <Route path='/orders' element={ <Orders /> } />
+        <Route path='/orders/:id' element={ <OrderDetails /> } />
       </Routes>
     </BrowserRouter>
 );

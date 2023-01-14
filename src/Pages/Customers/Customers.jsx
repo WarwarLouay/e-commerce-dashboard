@@ -78,6 +78,7 @@ const Customers = () => {
 
   return (
     <div style={{ width: '80%', marginLeft: '10%', marginBottom: '5%' }}>
+      <br /><br />
       <Table
         style={{ zIndex: '0' }}
         bordered

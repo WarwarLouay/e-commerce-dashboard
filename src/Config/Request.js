@@ -53,6 +53,21 @@ class Request {
         const link = "/api/order/delete";
         return await this.api.post(link, data);
     }
+
+    async getOrderById(id) {
+        const link = "/api/order/" + id;
+        return await this.api.get(link, id);
+    }
+
+    async acceptOrder(id) {
+        const link = "/api/order/accept";
+        return await this.api.post(link, id);
+    }
+
+    async rejectOrder(id) {
+        const link = "/api/order/reject";
+        return await this.api.post(link, id);
+    }
 }
 
 export default Request;

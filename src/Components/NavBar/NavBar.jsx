@@ -48,7 +48,7 @@ const NavBar = () => {
         removeCookie('jwt');
         navigate('/login');
         setIsIn(false);
-        sessionStorage.removeItem('isLoggedIn');
+        localStorage.removeItem('isLoggedIn');
     }
 
     return (

@@ -32,7 +32,7 @@ const Login = () => {
                 setOpen(true);
             }
             if (!data.message) {
-                sessionStorage.setItem('isLoggedIn', 'isLoggedIn');
+                localStorage.setItem('isLoggedIn', 'isLoggedIn');
                 navigate('/');
             }
         } catch (err) {

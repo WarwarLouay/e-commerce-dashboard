@@ -4,10 +4,11 @@ import Moment from 'moment';
 import Request from '../../Config/Request';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
-import { Table, Row, Col, Tooltip, Modal, Button, Text } from "@nextui-org/react";
+import { Table, Row, Col, Tooltip, Modal, Button, Text, Badge } from "@nextui-org/react";
 import { IconButton } from "../../Components/IconButton/IconButton";
 import { EyeIcon } from "../../Components/EyeIcon/EyeIcon";
 import { DeleteIcon } from "../../Components/DeleteIcon/DeleteIcon";
+import { Link } from 'react-router-dom';
 
 const Orders = () => {
 
@@ -78,6 +79,7 @@ const Orders = () => {
 
   return (
     <div style={{ width: '80%', marginLeft: '10%', marginBottom: '5%' }}>
+      <br /><br />
       <Table
         style={{ zIndex: '0' }}
         bordered
@@ -93,6 +95,7 @@ const Orders = () => {
           <Table.Column>NAME</Table.Column>
           <Table.Column>DATE</Table.Column>
           <Table.Column>AMOUNT</Table.Column>
+          <Table.Column>STATUS</Table.Column>
           <Table.Column>ACTIONS</Table.Column>
         </Table.Header>
         <Table.Body>
@@ -103,14 +106,23 @@ const Orders = () => {
                 <Table.Cell>{Moment(order.date).format('LLL')}</Table.Cell>
                 <Table.Cell>{order.total}$</Table.Cell>
                 <Table.Cell>
+                  {
+                    order.status === '1' ? <Badge color="success">Delivered</Badge>
+                      :
+                      order.status === '0' ? <Badge color="warning">Pending</Badge>
+                        :
+                        <Badge color="error">Cancelled</Badge>
+                  }
+                </Table.Cell>
+                <Table.Cell>
                   <Row justify="center" align="center">
-                  <Col css={{ d: "flex" }}>
-                                            <Tooltip content="Details">
-                                                <IconButton onClick={() => console.log("View user", order._id)}>
-                                                    <EyeIcon size={20} fill="#979797" />
-                                                </IconButton>
-                                            </Tooltip>
-                                        </Col>
+                    <Col css={{ d: "flex" }}>
+                      <Tooltip content="Details">
+                        <IconButton>
+                          <Link to={`${order._id}`}><EyeIcon size={20} fill="#979797" /></Link>
+                        </IconButton>
+                      </Tooltip>
+                    </Col>
                     <Col css={{ d: "flex" }}>
                       <Tooltip
                         content="Delete order"
