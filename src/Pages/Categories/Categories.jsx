@@ -7,6 +7,8 @@ import MuiAlert from '@mui/material/Alert';
 import { Table, Row, Col, Tooltip, User, Modal, Input, Button, Text } from "@nextui-org/react";
 import { IconButton } from "../../Components/IconButton/IconButton";
 import { DeleteIcon } from "../../Components/DeleteIcon/DeleteIcon";
+import { EyeIcon } from "../../Components/EyeIcon/EyeIcon";
+import { Link } from 'react-router-dom';
 
 const Categories = () => {
 
@@ -21,6 +23,8 @@ const Categories = () => {
     const [severity, setSeverity] = React.useState('');
 
     const [categories, setCategories] = React.useState([]);
+
+    const [filteredCategories, setFilteredCategories] = React.useState([]);
 
     const [categoryImage, setCategoryImage] = React.useState([]);
     const [categoryImageSrc, setCategoryImageSrc] = React.useState('');
@@ -40,6 +44,7 @@ const Categories = () => {
         const category = await request.get('category');
         console.log(category.data);
         setCategories(category.data);
+        setFilteredCategories(category.data);
     }
 
     const deletetHandler = (category) => {
@@ -114,6 +119,17 @@ const Categories = () => {
         }
     }
 
+    async function onSearch(key) {
+        if (key.trim() !== '') {
+            let filter = categories.filter((category) => {
+                return (category.categoryName.toLowerCase().includes(key.toLowerCase().trim()))
+            })
+            setFilteredCategories(filter);
+        } else {
+            setFilteredCategories(categories);
+        }
+    };
+
     const handleCloseAlert = (event, reason) => {
         if (reason === 'clickaway') {
             return;
@@ -125,9 +141,13 @@ const Categories = () => {
     return (
         <div style={{ width: '80%', marginLeft: '10%', marginBottom: '5%' }}>
             <br /><br />
-            <Button shadow color="gradient" auto onPress={() => setVisibleAdd(true)}>
-                Add
-            </Button>
+            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                <Button shadow color="gradient" auto onPress={() => setVisibleAdd(true)}>
+                    Add
+                </Button>
+
+                <Input labelPlaceholder="Search..." onChange={(e) => onSearch(e.target.value)} />
+            </div>
             <br />
             <Table
                 style={{ zIndex: '0' }}
@@ -145,7 +165,7 @@ const Categories = () => {
                     <Table.Column>ACTIONS</Table.Column>
                 </Table.Header>
                 <Table.Body>
-                    {categories.map((category) => {
+                    {filteredCategories.map((category) => {
                         return (
                             <Table.Row key={category._id}>
                                 <Table.Cell>
@@ -154,6 +174,13 @@ const Categories = () => {
                                     </User></Table.Cell>
                                 <Table.Cell>
                                     <Row justify="center" align="center">
+                                        <Col css={{ d: "flex" }}>
+                                            <Tooltip content="Details">
+                                                <IconButton>
+                                                    <Link to={`${category._id}`}><EyeIcon size={20} fill="#979797" /></Link>
+                                                </IconButton>
+                                            </Tooltip>
+                                        </Col>
                                         <Col css={{ d: "flex" }}>
                                             <Tooltip
                                                 content="Delete category"

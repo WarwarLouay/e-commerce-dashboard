@@ -3,7 +3,7 @@ import React from 'react';
 import Request from '../../Config/Request';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
-import { Table, Row, Col, Tooltip, Modal, Button, Text } from "@nextui-org/react";
+import { Table, Row, Col, Tooltip, Modal, Button, Text, Input } from "@nextui-org/react";
 import { IconButton } from "../../Components/IconButton/IconButton";
 import { DeleteIcon } from "../../Components/DeleteIcon/DeleteIcon";
 
@@ -20,6 +20,7 @@ const Customers = () => {
   const [severity, setSeverity] = React.useState('');
 
   const [users, setUsers] = React.useState([]);
+  const [filteredUsers, setFilteredUsers] = React.useState([]);
 
   const [selectedUserId, setSelectedUserId] = React.useState('');
   const [selectedUserName, setSelectedUserName] = React.useState('');
@@ -34,6 +35,7 @@ const Customers = () => {
     const user = await request.get('user');
     console.log(user.data);
     setUsers(user.data);
+    setFilteredUsers(user.data);
   }
 
   const deletetHandler = (user) => {
@@ -68,6 +70,24 @@ const Customers = () => {
     callPage();
   }
 
+  async function onSearch(key) {
+    if (key.trim() !== '') {
+      let filter = users.filter((user) => {
+        return (user.fullName.toLowerCase().includes(key.toLowerCase().trim())
+          ||
+          user.email.toLowerCase().includes(key.toLowerCase().trim())
+          ||
+          user.country.toLowerCase().includes(key.toLowerCase().trim())
+          ||
+          user.phone.toLowerCase().includes(key.toLowerCase().trim())
+        )
+      })
+      setFilteredUsers(filter);
+    } else {
+      setFilteredUsers(users);
+    }
+  };
+
   const handleCloseAlert = (event, reason) => {
     if (reason === 'clickaway') {
       return;
@@ -78,6 +98,8 @@ const Customers = () => {
 
   return (
     <div style={{ width: '80%', marginLeft: '10%', marginBottom: '5%' }}>
+      <br /><br />
+      <Input labelPlaceholder="Search..." onChange={(e) => onSearch(e.target.value)} />
       <br /><br />
       <Table
         style={{ zIndex: '0' }}
@@ -98,7 +120,7 @@ const Customers = () => {
           <Table.Column>ACTIONS</Table.Column>
         </Table.Header>
         <Table.Body>
-          {users.map((user) => {
+          {filteredUsers.map((user) => {
             return (
               <Table.Row key={user._id}>
                 <Table.Cell>{user.fullName}</Table.Cell>

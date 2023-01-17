@@ -31,6 +31,8 @@ const Products = () => {
     const [products, setProducts] = React.useState([]);
     const [categories, setCategories] = React.useState([]);
 
+    const [filteredProducts, setFilteredProducts] = React.useState([]);
+
     const [selected, setSelected] = React.useState(new Set([""]));
     const selectedCategoryValue = React.useMemo(
         () => Array.from(selected).join(", ").replaceAll("_", " "),
@@ -79,6 +81,7 @@ const Products = () => {
         const product = await request.get('product');
         console.log(product.data);
         setProducts(product.data);
+        setFilteredProducts(product.data);
 
         const category = await request.get('category');
         console.log(category.data);
@@ -204,6 +207,20 @@ const Products = () => {
         }
     }
 
+    async function onSearch(key) {
+        if (key.trim() !== '') {
+            let filter = products.filter((product) => {
+                return (product.productName.toLowerCase().includes(key.toLowerCase().trim())
+                ||
+                product.categoryId.categoryName.toLowerCase().includes(key.toLowerCase().trim())
+            )
+            })
+            setFilteredProducts(filter);
+        } else {
+            setFilteredProducts(products);
+        }
+    };
+
     const handleCloseAlert = (event, reason) => {
         if (reason === 'clickaway') {
             return;
@@ -215,9 +232,13 @@ const Products = () => {
     return (
         <div style={{ width: '80%', marginLeft: '10%', marginBottom: '5%' }}>
             <br /><br />
-            <Button shadow color="gradient" auto onPress={() => setVisibleAdd(true)}>
-                Add
-            </Button>
+            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                <Button shadow color="gradient" auto onPress={() => setVisibleAdd(true)}>
+                    Add
+                </Button>
+
+                <Input labelPlaceholder="Search..." onChange={(e) => onSearch(e.target.value)} />
+            </div>
             <br />
             <Table
                 style={{ zIndex: '0' }}
@@ -237,7 +258,7 @@ const Products = () => {
                     <Table.Column>ACTIONS</Table.Column>
                 </Table.Header>
                 <Table.Body>
-                    {products.map((product) => {
+                    {filteredProducts.map((product) => {
                         return (
                             <Table.Row key={product._id}>
                                 <Table.Cell>
@@ -250,7 +271,7 @@ const Products = () => {
                                     <Row justify="center" align="center">
                                         <Col css={{ d: "flex" }}>
                                             <Tooltip content="Details">
-                                                <IconButton onClick={() => console.log("View user", product._id)}>
+                                                <IconButton>
                                                     <EyeIcon size={20} fill="#979797" />
                                                 </IconButton>
                                             </Tooltip>

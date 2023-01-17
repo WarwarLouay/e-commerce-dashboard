@@ -4,7 +4,7 @@ import Moment from 'moment';
 import Request from '../../Config/Request';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
-import { Table, Row, Col, Tooltip, Modal, Button, Text, Badge } from "@nextui-org/react";
+import { Table, Row, Col, Tooltip, Modal, Button, Text, Badge, Input } from "@nextui-org/react";
 import { IconButton } from "../../Components/IconButton/IconButton";
 import { EyeIcon } from "../../Components/EyeIcon/EyeIcon";
 import { DeleteIcon } from "../../Components/DeleteIcon/DeleteIcon";
@@ -23,6 +23,7 @@ const Orders = () => {
   const [severity, setSeverity] = React.useState('');
 
   const [orders, setOrders] = React.useState([]);
+  const [filteredOrders, setFilteredOrders] = React.useState([]);
 
   const [selectedOrderId, setSelectedOrderId] = React.useState('');
 
@@ -36,6 +37,7 @@ const Orders = () => {
     const order = await request.get('order/getall');
     console.log(order.data);
     setOrders(order.data);
+    setFilteredOrders(order.data);
   }
 
   const deletetHandler = (order) => {
@@ -69,6 +71,17 @@ const Orders = () => {
     callPage();
   }
 
+  async function onSearch(key) {
+    if (key.trim() !== '') {
+      let filter = orders.filter((order) => {
+        return (order.user.fullName.toLowerCase().includes(key.toLowerCase().trim()))
+      })
+      setFilteredOrders(filter);
+    } else {
+      setFilteredOrders(orders);
+    }
+  };
+
   const handleCloseAlert = (event, reason) => {
     if (reason === 'clickaway') {
       return;
@@ -79,6 +92,8 @@ const Orders = () => {
 
   return (
     <div style={{ width: '80%', marginLeft: '10%', marginBottom: '5%' }}>
+      <br /><br />
+      <Input labelPlaceholder="Search..." onChange={(e) => onSearch(e.target.value)} />
       <br /><br />
       <Table
         style={{ zIndex: '0' }}
@@ -99,7 +114,7 @@ const Orders = () => {
           <Table.Column>ACTIONS</Table.Column>
         </Table.Header>
         <Table.Body>
-          {orders.map((order) => {
+          {filteredOrders.map((order) => {
             return (
               <Table.Row key={order._id}>
                 <Table.Cell>{order.user.fullName}</Table.Cell>

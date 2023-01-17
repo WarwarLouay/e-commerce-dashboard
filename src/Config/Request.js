@@ -68,6 +68,11 @@ class Request {
         const link = "/api/order/reject";
         return await this.api.post(link, id);
     }
+
+    async getProductsByCategory(id) {
+        const link = "/api/product/category/" + id;
+        return await this.api.get(link, id);
+    }
 }
 
 export default Request;

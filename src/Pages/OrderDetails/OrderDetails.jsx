@@ -18,7 +18,7 @@ const OrderDetails = () => {
     const id = params.id;
 
     const [orderDetails, setOrderDetails] = React.useState('');
-    const [isOk, setIsOk] = React.useState(false);
+    const [isLoading, setIsLoading] = React.useState(false);
 
     const [openAlert, setOpenAlert] = React.useState(false);
     const [message, setMessage] = React.useState('');
@@ -36,7 +36,7 @@ const OrderDetails = () => {
         const response = await request.getOrderById(params.id);
         console.log(response.data);
         if (response) {
-            setIsOk(true);
+            setIsLoading(true);
             setOrderDetails(response.data);
             console.log(orderDetails);
         }
@@ -94,7 +94,7 @@ const OrderDetails = () => {
 
     return (
         <div>
-            {isOk ? <div style={{ padding: '2% 5%' }}>
+            {isLoading ? <div style={{ padding: '2% 5%' }}>
                 <Grid.Container gap={2} justify="space-between">
                     {orderDetails.product.map((product) => {
                         return (

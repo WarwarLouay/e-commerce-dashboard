@@ -3,6 +3,7 @@ import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import NavBar from './Components/NavBar/NavBar';
 import Categories from './Pages/Categories/Categories';
+import CategoryDetails from './Pages/CategoryDetails/CategoryDetails';
 import Customers from './Pages/Customers/Customers';
 import Login from './Pages/Login/Login';
 import OrderDetails from './Pages/OrderDetails/OrderDetails';
@@ -31,6 +32,7 @@ return (
         <Route path='/customers' element={ <Customers /> } />
         <Route path='/orders' element={ <Orders /> } />
         <Route path='/orders/:id' element={ <OrderDetails /> } />
+        <Route path='/categories/:id' element={ <CategoryDetails /> } />
       </Routes>
     </BrowserRouter>
 );
