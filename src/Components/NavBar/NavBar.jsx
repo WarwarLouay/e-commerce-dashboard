@@ -22,16 +22,22 @@ const NavBar = () => {
     const [orderLength, setOrderLength] = React.useState('');
 
     const collapseItems = [
-        "Profile",
-        "Dashboard",
-        "Activity",
-        "Analytics",
-        "System",
-        "Deployments",
-        "My Settings",
-        "Team Settings",
-        "Help & Feedback",
-        "Log Out",
+        {
+            title: 'Products',
+            link: ''
+        },
+        {
+            title: 'Categories',
+            link: 'categories'
+        },
+        {
+            title: 'Customers',
+            link: 'customers'
+        },
+        {
+            title: 'Orders',
+            link: 'orders'
+        },
     ];
 
     React.useEffect(() => {
@@ -65,7 +71,7 @@ const NavBar = () => {
 
         const product = await request.get('product');
         setProductLength(product.data.length);
-      }
+    }
 
     const logOut = () => {
         removeCookie('jwt');
@@ -187,16 +193,18 @@ const NavBar = () => {
                             css={{
                                 color: index === collapseItems.length - 1 ? "$error" : "",
                             }}
-                            isActive={index === 2}
+                            isActive={item.title === active}
                         >
                             <Link
                                 color="inherit"
                                 css={{
                                     minWidth: "100%",
                                 }}
-                                href="#"
+                                style={{ textDecoration: 'none' }}
+                                to={`/${item.link}`}
+                                onClick={() => setIsActive(item.title)}
                             >
-                                {item}
+                                {item.title}
                             </Link>
                         </Navbar.CollapseItem>
                     ))}
