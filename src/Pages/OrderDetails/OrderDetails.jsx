@@ -103,7 +103,7 @@ const OrderDetails = () => {
                                     <Card.Body>
                                         <Row style={{ justifyContent: 'space-between' }}>
                                             <User squared src={`http://localhost:4000${product.product.productImage}`} css={{ p: 0 }}>
-                                                {product.product.productName}
+                                                {product.product.productEngName}
                                             </User>
                                             <b>{product.product.productPrice}$</b>
                                             <b>X{product.qty}</b>

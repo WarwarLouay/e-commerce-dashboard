@@ -40,9 +40,11 @@ const Products = () => {
     );
     const [productImage, setProductImage] = React.useState([]);
     const [productImageSrc, setProductImageSrc] = React.useState('');
-    const [productName, setProductName] = React.useState('');
+    const [productEngName, setProductEngName] = React.useState('');
+    const [productArName, setProductArName] = React.useState('');
     const [productPrice, setProductPrice] = React.useState('');
-    const [productDescription, setProductDescription] = React.useState('');
+    const [productEngDescription, setProductEngDescription] = React.useState('');
+    const [productArDescription, setProductArDescription] = React.useState('');
 
     const [selectedProductCategory, setSelectedProductCategory] = React.useState(new Set([""]));
     const selectedValue = React.useMemo(
@@ -165,12 +167,14 @@ const Products = () => {
         for (let key in productImage) {
             formData.append('productImage', productImage[key]);
         }
-        formData.append('productName', productName);
+        formData.append('productEngName', productEngName);
+        formData.append('productArName', productArName);
         formData.append('productPrice', productPrice);
-        formData.append('productDescription', productDescription);
+        formData.append('productEngDescription', productEngDescription);
+        formData.append('productArDescription', productArDescription);
         formData.append('category', category);
 
-        if (!productName || !productDescription || !productPrice || !productImage || !selected) {
+        if (!productEngName || !productArName || !productEngDescription || !productArDescription || !productPrice || !productImage || !selected) {
             setMessage('Please fill all information');
             setSeverity('error');
             setOpenAlert(true);
@@ -183,13 +187,15 @@ const Products = () => {
         } else {
             axios.post(`http://localhost:4000/api/product`, formData).then(response => {
                 if (response.data.message === 'added') {
-                    setMessage(`${productName} added`);
+                    setMessage(`${productEngName} added`);
                     setSeverity('success');
                     setOpenAlert(true);
                     callPage();
-                    setProductName('');
+                    setProductEngName('');
+                    setProductArName('');
                     setProductPrice('');
-                    setProductDescription('');
+                    setProductEngDescription('');
+                    setProductArDescription('');
                     setSelected('');
                     setProductImageSrc('');
                     setProductImage([]);
@@ -263,9 +269,9 @@ const Products = () => {
                             <Table.Row key={product._id}>
                                 <Table.Cell>
                                     <User squared src={`http://localhost:4000${product.productImage}`} css={{ p: 0 }}>
-                                        {product.productName}
+                                        {product.productEngName}
                                     </User></Table.Cell>
-                                <Table.Cell>{product.categoryId.categoryName}</Table.Cell>
+                                <Table.Cell>{product.categoryId.categoryEngName}</Table.Cell>
                                 <Table.Cell>{product.productPrice}$</Table.Cell>
                                 <Table.Cell>
                                     <Row justify="center" align="center">
@@ -355,7 +361,7 @@ const Products = () => {
                         >
                             {categories.map((category) => {
                                 return (
-                                    <Dropdown.Item key={category._id}>{category.categoryName}</Dropdown.Item>
+                                    <Dropdown.Item key={category._id}>{category.categoryEngName}</Dropdown.Item>
                                 )
                             })}
                         </Dropdown.Menu>
@@ -366,9 +372,19 @@ const Products = () => {
                         fullWidth
                         color="primary"
                         size="lg"
-                        placeholder="Title"
-                        value={productName}
-                        onChange={(e) => setProductName(e.target.value)}
+                        placeholder="English Name"
+                        value={productEngName}
+                        onChange={(e) => setProductEngName(e.target.value)}
+                    />
+                    <Input
+                        clearable
+                        bordered
+                        fullWidth
+                        color="primary"
+                        size="lg"
+                        placeholder="Arabic Name"
+                        value={productArName}
+                        onChange={(e) => setProductArName(e.target.value)}
                     />
                     <Input
                         clearable
@@ -386,9 +402,19 @@ const Products = () => {
                         fullWidth
                         color="primary"
                         size="lg"
-                        placeholder="Description"
-                        value={productDescription}
-                        onChange={(e) => setProductDescription(e.target.value)}
+                        placeholder="English Description"
+                        value={productEngDescription}
+                        onChange={(e) => setProductEngDescription(e.target.value)}
+                    />
+                    <Input
+                        clearable
+                        bordered
+                        fullWidth
+                        color="primary"
+                        size="lg"
+                        placeholder="Arabic Description"
+                        value={productArDescription}
+                        onChange={(e) => setProductArDescription(e.target.value)}
                     />
                 </Modal.Body>
                 <Modal.Footer>

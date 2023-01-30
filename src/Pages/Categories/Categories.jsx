@@ -28,7 +28,8 @@ const Categories = () => {
 
     const [categoryImage, setCategoryImage] = React.useState([]);
     const [categoryImageSrc, setCategoryImageSrc] = React.useState('');
-    const [categoryName, setCategoryName] = React.useState('');
+    const [categoryEngName, setCategoryEngName] = React.useState('');
+    const [categoryArName, setCategoryArName] = React.useState('');
 
     const [selectedCategoryId, setSelectedCategoryId] = React.useState('');
     const [selectedCategoryName, setSelectedCategoryName] = React.useState('');
@@ -88,9 +89,10 @@ const Categories = () => {
         for (let key in categoryImage) {
             formData.append('categoryImage', categoryImage[key]);
         }
-        formData.append('categoryName', categoryName);
+        formData.append('categoryEngName', categoryEngName);
+        formData.append('categoryArName', categoryArName);
 
-        if (!categoryImage || !categoryName) {
+        if (!categoryImage || !categoryEngName || !categoryArName) {
             setMessage('Please fill all information');
             setSeverity('error');
             setOpenAlert(true);
@@ -98,11 +100,12 @@ const Categories = () => {
         } else {
             axios.post(`http://localhost:4000/api/category`, formData).then(response => {
                 if (response.data.message === 'added') {
-                    setMessage(`${categoryName} added`);
+                    setMessage(`${categoryEngName} added`);
                     setSeverity('success');
                     setOpenAlert(true);
                     callPage();
-                    setCategoryName('');
+                    setCategoryEngName('');
+                    setCategoryArName('');
                     setCategoryImageSrc('');
                     setCategoryImage([]);
                 } else {
@@ -170,7 +173,7 @@ const Categories = () => {
                             <Table.Row key={category._id}>
                                 <Table.Cell>
                                     <User squared src={`http://localhost:4000${category.categoryImage}`} css={{ p: 0 }}>
-                                        {category.categoryName}
+                                        {category.categoryEngName}
                                     </User></Table.Cell>
                                 <Table.Cell>
                                     <Row justify="center" align="center">
@@ -244,9 +247,19 @@ const Categories = () => {
                         fullWidth
                         color="primary"
                         size="lg"
-                        placeholder="Title"
-                        value={categoryName}
-                        onChange={(e) => setCategoryName(e.target.value)}
+                        placeholder="English Name"
+                        value={categoryEngName}
+                        onChange={(e) => setCategoryEngName(e.target.value)}
+                    />
+                    <Input
+                        clearable
+                        bordered
+                        fullWidth
+                        color="primary"
+                        size="lg"
+                        placeholder="Arabic Name"
+                        value={categoryArName}
+                        onChange={(e) => setCategoryArName(e.target.value)}
                     />
                 </Modal.Body>
                 <Modal.Footer>
