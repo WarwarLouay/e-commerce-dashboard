@@ -50,7 +50,7 @@ const Categories = () => {
 
     const deletetHandler = (category) => {
         setSelectedCategoryId(category._id);
-        setSelectedCategoryName(category.categoryName);
+        setSelectedCategoryName(category.categoryEngName);
         setVisibleDelete(true);
     };
     const closeHandlerDelete = () => {
@@ -114,7 +114,7 @@ const Categories = () => {
                     setOpenAlert(true);
                 }
             }).catch(error => {
-                setMessage('Something wrong');
+                setMessage(error);
                 setSeverity('error');
                 setOpenAlert(true);
             });
@@ -125,7 +125,7 @@ const Categories = () => {
     async function onSearch(key) {
         if (key.trim() !== '') {
             let filter = categories.filter((category) => {
-                return (category.categoryName.toLowerCase().includes(key.toLowerCase().trim()))
+                return (category.categoryEngName.toLowerCase().includes(key.toLowerCase().trim()))
             })
             setFilteredCategories(filter);
         } else {
